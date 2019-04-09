@@ -5,7 +5,7 @@ security.user.name=admin
 security.user.password=123456
 
 ## 自定义appid和密码
-security.oauth2.client.client-id=imooc
+security.oauth2.client.client-id=net5ijy
 security.oauth2.client.client-secret=123456
 
 ## 获取code

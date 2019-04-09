@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.net5ijy.oauth2.repository.UserRepository">
+
+	<resultMap type="User" id="UserResultMap">
+		<result column="id" property="id" jdbcType="INTEGER" javaType="int" />
+		<result column="username" property="username" jdbcType="VARCHAR"
+			javaType="string" />
+		<result column="password" property="password" jdbcType="VARCHAR"
+			javaType="string" />
+		<result column="phone" property="phone" jdbcType="VARCHAR"
+			javaType="string" />
+		<result column="email" property="email" jdbcType="VARCHAR"
+			javaType="string" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"
+			javaType="java.util.Date" />
+		<collection property="roles" select="selectRolesByUserId"
+			column="id"></collection>
+	</resultMap>
+
+	<!-- 根据用户名查询用户 -->
+	<select id="findByUsername" parameterType="java.lang.String"
+		resultMap="UserResultMap">
+		<![CDATA[
+		select * from springcloud_user where username = #{username}
+		]]>
+	</select>
+
+	<!-- 根据user id查询用户拥有的role -->
+	<select id="selectRolesByUserId" parameterType="java.lang.Integer"
+		resultType="Role">
+		<![CDATA[
+		select r.id, r.name from springcloud_user_role ur, springcloud_role r
+		where ur.role_id = r.id and ur.user_id = #{id}
+		]]>
+	</select>
+
+</mapper>

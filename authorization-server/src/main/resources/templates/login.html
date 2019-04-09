@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"></meta>
+<title>Spring Cloud Administrator</title>
+<script type="text/javascript" src="../../js/lib/jquery-1.9.1.min.js" th:src="@{/js/lib/jquery-1.9.1.min.js}"></script>
+<!-- bootstrap javascript -->
+<script type="text/javascript" src="../../js/lib/bootstrap.min.js" th:src="@{/js/lib/bootstrap.min.js}"></script>
+
+<!-- bootstrap style -->
+<link href="../../css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+<link href="../../css/bootstrap-theme.min.css" th:href="@{/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+<!-- 表单验证 -->
+<script type="text/javascript" src="../../js/lib/Validform_v5.3.2_ncr_min.js" th:src="@{/js/lib/Validform_v5.3.2_ncr_min.js}"></script>
+<link href="../../css/Validform.css" th:href="@{/css/Validform.css}" rel="stylesheet"/>
+<!-- Custom styles -->
+<link href="../../css/common.css" th:href="@{/css/common.css}" rel="stylesheet"/>
+
+<!-- 消息提示 -->
+<script type="text/javascript" src="../../js/lib/toastr.min.js" th:src="@{/js/lib/toastr.min.js}"></script>
+<link href="../../css/toastr.min.css" th:href="@{/css/toastr.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<nav th:replace="include/header :: header"></nav>
+<div id="main" class="container">
+	<form class="form-horizontal user_form" th:action="@{/login}" method="post">
+		<div class="form-group">
+			<label class="col-sm-1 control-label">用&ensp;户&ensp;名: </label>
+			<div class="col-sm-5">
+				<input class="form-control" placeholder="用户名" name="username" 
+					datatype="/[a-zA-Z_0-9]{6,20}/g" sucmsg="用户名验证通过！" nullmsg="请填写用户名！" errormsg="请填写用户名！" />
+			</div>
+			<div class="col-sm-6 control-label" style="text-align: left"></div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-1 control-label">密&#12288;&#12288;码: </label>
+			<div class="col-sm-5">
+				<input class="form-control" placeholder="请填写密码" type="password" name="password" 
+					datatype="/[a-zA-Z_0-9]{6,20}/g" sucmsg="密码验证通过！" nullmsg="请填写密码！" errormsg="请填写密码！" />
+			</div>
+			<div class="col-sm-6 control-label" style="text-align: left"></div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-offset-1 col-sm-10">
+				<button type="submit" class="btn btn-default"> 登 陆 </button>
+			</div>
+		</div>
+	</form>
+</div>
+<input type="hidden" id="error" th:value="${userModel} and ${userModel.loginError}?${userModel.errorMsg}:''" />
+<footer class="blog-footer bg-inverse" data-th-fragment="footer">
+    <div class="container">
+ 		<p class="m-0 text-center text-white">© 2018 <a href="mailto:572399495@qq.com">572399495@qq.com</a></p>
+    </div>
+</footer>
+</body>
+<script type="text/javascript">
+$(function() {
+	// 消息框配置
+	toastr.options = {
+		closeButton: false,
+		debug: false,
+		progressBar: false,
+		positionClass: "toast-top-center",
+		onclick: null,
+		showDuration: "300",
+		hideDuration: "500",
+		timeOut: "2000",
+		extendedTimeOut: "1000",
+		showEasing: "swing",
+		hideEasing: "linear",
+		showMethod: "fadeIn",
+		hideMethod: "fadeOut"
+	};
+	// 表单验证
+	$(".user_form").Validform({
+		tiptype: 2,
+		showAllError: true,
+		datatype: {
+			"zh1-6": /^[\u4E00-\u9FA5\uf900-\ufa2d]{1,6}$/
+		}
+	});
+	// 显示登陆失败提示
+	if($("#error").val()) {
+		toastr.error($("#error").val());
+	}
+});
+</script>
+</html>

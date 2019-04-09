@@ -1,0 +1,28 @@
+/* 导航 */
+.navbar-inverse .navbar-brand {
+	font-weight: bold;
+	color: #fff;
+}
+/* 主区域 */
+#main {
+	margin: 0 auto;
+}
+#main .table tr td, #main .table tr th {
+	text-align: center;
+}
+/* 用户添加/修改表单表格样式 */
+#user_form table tr td {
+	padding: 5px 10px 5px 0px;
+}
+/* 页面底部 */
+.blog-footer {
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+}
+/* 错误页面倒计时 */
+#timmer {
+	font-weight: bold;
+	color: red;
+}
