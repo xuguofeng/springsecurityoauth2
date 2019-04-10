@@ -117,6 +117,7 @@
 					</archive>
 					<excludes>
 						<exclude>application.properties</exclude>
+						<exclude>logback-spring.xml</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -137,6 +138,7 @@
 									<filtering>true</filtering>
 									<includes>
 										<include>*.properties</include>
+										<include>logback-spring.xml</include>
 									</includes>
 								</resource>
 							</resources>

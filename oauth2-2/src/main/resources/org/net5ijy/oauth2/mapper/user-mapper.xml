@@ -28,6 +28,13 @@
 		]]>
 	</select>
 
+	<!-- 查询全部用户 -->
+	<select id="findUsers" resultMap="UserResultMap">
+		<![CDATA[
+		select * from springcloud_user
+		]]>
+	</select>
+
 	<!-- 根据user id查询用户拥有的role -->
 	<select id="selectRolesByUserId" parameterType="java.lang.Integer"
 		resultType="Role">
