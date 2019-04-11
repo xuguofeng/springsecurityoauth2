@@ -40,10 +40,10 @@ http://localhost:7001/oauth/token
 		scope			all
 
 ## 请求资源
-http://localhost:7001/order/demo?access_token=afd3c4af-8481-41cd-9ce0-bf8d773d6763
+http://localhost:7001/order/demo?access_token=628b96da-707d-4116-88fc-5ea8ed2762a1
 
 ## curl命令
-curl --user net5ijy:12345678 -X POST -d "grant_type=authorization_code&scope=all&redirect_uri=http%3a%2f%2flocalhost%3a8080&code=A9FwZt" http://localhost:7001/oauth/token
+curl --user net5ijy:12345678 -X POST -d "grant_type=authorization_code&scope=all&redirect_uri=http%3a%2f%2flocalhost%3a8080&code=tDXgqb" http://localhost:7001/oauth/token
 
 ## 密码模式
 curl --user net5ijy:12345678 -X POST -d "grant_type=password&username=admin&password=123456&scope=all" http://localhost:7001/oauth/token

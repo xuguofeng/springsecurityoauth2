@@ -19,9 +19,9 @@
 		<file>${LOG_PATH}\\oauth2-2.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<fileNamePattern>${LOG_PATH}\\oauth2-2-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<maxFileSize>5MB</maxFileSize>    
+			<maxFileSize>20MB</maxFileSize>
 			<maxHistory>6</maxHistory>
-			<totalSizeCap>50MB</totalSizeCap>
+			<totalSizeCap>50GB</totalSizeCap>
 		</rollingPolicy>
 		<append>true</append>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
