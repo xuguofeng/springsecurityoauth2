@@ -53,8 +53,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     http.requestMatchers()
         .antMatchers(
-            "/login", "/login-error", "/oauth/authorize", "/oauth/token").and().authorizeRequests()
-        .antMatchers("/login").permitAll().anyRequest().authenticated();
+            "/login", "/login-error", "/oauth/authorize", "/oauth/token")
+        .and()
+        .authorizeRequests()
+        .antMatchers("/login", "/login-error").permitAll()
+        .anyRequest().authenticated();
 
     // 登录页面
     http.formLogin().loginPage("/login").failureUrl("/login-error");
