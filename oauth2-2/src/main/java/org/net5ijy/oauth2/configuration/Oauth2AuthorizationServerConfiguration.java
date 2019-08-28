@@ -1,9 +1,10 @@
 package org.net5ijy.oauth2.configuration;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -17,59 +18,71 @@ import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeSe
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+/**
+ * Oauth2授权服务器配置
+ *
+ * @author xuguofeng
+ * @date 2019/8/28 11:23
+ */
 @Configuration
 public class Oauth2AuthorizationServerConfiguration extends
-		AuthorizationServerConfigurerAdapter {
+    AuthorizationServerConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+  @Resource
+  private UserDetailsService userDetailsService;
 
-	@Autowired
-	private AuthenticationManager authenticationManager;
+  @Resource
+  private AuthenticationManager authenticationManager;
 
-	@Autowired
-	private DataSource dataSource;
+  @Resource
+  private DataSource dataSource;
 
-	@Override
-	public void configure(ClientDetailsServiceConfigurer clients)
-			throws Exception {
+  @Resource
+  private RedisConnectionFactory redisConnectionFactory;
 
-		// 数据库管理client
-		clients.withClientDetails(new JdbcClientDetailsService(dataSource));
-	}
+  @Override
+  public void configure(ClientDetailsServiceConfigurer clients)
+      throws Exception {
 
-	@Override
-	public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-			throws Exception {
+    // 数据库管理client
+    clients.withClientDetails(new JdbcClientDetailsService(dataSource));
+  }
 
-		// 用户信息查询服务
-		endpoints.userDetailsService(userDetailsService);
+  @Override
+  public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
 
-		// 数据库管理access_token和refresh_token
-		TokenStore tokenStore = new JdbcTokenStore(dataSource);
+    // 用户信息查询服务
+    endpoints.userDetailsService(userDetailsService);
 
-		endpoints.tokenStore(tokenStore);
+    // 数据库管理access_token和refresh_token
+    TokenStore tokenStore = new JdbcTokenStore(dataSource);
 
-		ClientDetailsService clientService = new JdbcClientDetailsService(
-				dataSource);
+    // 使用Redis管理access_token和refresh_token
+    TokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
 
-		DefaultTokenServices tokenServices = new DefaultTokenServices();
-		tokenServices.setTokenStore(tokenStore);
-		tokenServices.setSupportRefreshToken(true);
-		tokenServices.setClientDetailsService(clientService);
-		// tokenServices.setAccessTokenValiditySeconds(180);
-		// tokenServices.setRefreshTokenValiditySeconds(180);
+    endpoints.tokenStore(redisTokenStore);
 
-		endpoints.tokenServices(tokenServices);
+    ClientDetailsService clientService = new JdbcClientDetailsService(
+        dataSource);
 
-		endpoints.authenticationManager(authenticationManager);
+    DefaultTokenServices tokenServices = new DefaultTokenServices();
+    tokenServices.setTokenStore(redisTokenStore);
+    tokenServices.setSupportRefreshToken(true);
+    tokenServices.setClientDetailsService(clientService);
 
-		// 数据库管理授权码
-		endpoints.authorizationCodeServices(new JdbcAuthorizationCodeServices(
-				dataSource));
-		// 数据库管理授权信息
-		ApprovalStore approvalStore = new JdbcApprovalStore(dataSource);
-		endpoints.approvalStore(approvalStore);
-	}
+    // tokenServices.setAccessTokenValiditySeconds(180);
+    // tokenServices.setRefreshTokenValiditySeconds(180);
+
+    endpoints.tokenServices(tokenServices);
+
+    endpoints.authenticationManager(authenticationManager);
+
+    // 数据库管理授权码
+    endpoints.authorizationCodeServices(new JdbcAuthorizationCodeServices(dataSource));
+    // 数据库管理授权信息
+    ApprovalStore approvalStore = new JdbcApprovalStore(dataSource);
+    endpoints.approvalStore(approvalStore);
+  }
 }

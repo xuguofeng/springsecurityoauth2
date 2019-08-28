@@ -35,7 +35,7 @@
 	授权后表明您已同意 <a  href="javascript:;" style="color: #E9686B">OAUTH-BOOT 服务协议</a>
 	<form method="post" action="/oauth/authorize">
 		<input type="hidden" name="user_oauth_approval" value="true" />
-		<input type="hidden" name="scope.all" value="true" />
+		<input type="hidden" th:name="'scope.'+${scope}" value="true" />
 		<br />
 		<button class="btn" type="submit">同意/授权</button>
 	</form>

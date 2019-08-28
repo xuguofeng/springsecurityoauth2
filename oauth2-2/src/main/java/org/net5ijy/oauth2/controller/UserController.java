@@ -6,78 +6,82 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.net5ijy.oauth2.bean.User;
 import org.net5ijy.oauth2.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 用户信息接口
+ *
+ * @author xuguofeng
+ * @date 2019/8/28 12:03
+ */
+@Slf4j
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
 
-	static Logger log = LoggerFactory.getLogger(UserController.class);
+  @Resource
+  private UserService userService;
 
-	@Autowired
-	private UserService userService;
+  @RequestMapping(value = "/list")
+  @ResponseBody
+  public List<User> list() {
+    List<User> users = userService.getUsers();
+    log.info(users.toString());
+    log.info(users.toString());
+    log.info(users.toString());
+    log.info(users.toString());
+    return users;
+  }
 
-	@RequestMapping(value = "/list")
-	@ResponseBody
-	public List<User> list() {
-		List<User> users = userService.getUsers();
-		log.info(users.toString());
-		log.info(users.toString());
-		log.info(users.toString());
-		log.info(users.toString());
-		return users;
-	}
+  public static void main(String[] args) {
 
-	public static void main(String[] args) {
+    String cmd = "D:\\app\\curl-7.64.1-win64\\bin\\curl.exe -I http://localhost:7001/users/list?access_token=628b96da-707d-4116-88fc-5ea8ed2762a1";
 
-		String cmd = "D:\\app\\curl-7.64.1-win64\\bin\\curl.exe -I http://localhost:7001/users/list?access_token=628b96da-707d-4116-88fc-5ea8ed2762a1";
+    for (int i = 0; i < Integer.MAX_VALUE; i++) {
 
-		for (int i = 0; i < Integer.MAX_VALUE; i++) {
+      Runtime r = Runtime.getRuntime();
 
-			Runtime r = Runtime.getRuntime();
+      try {
 
-			try {
+        Process process = r.exec(cmd);
 
-				Process process = r.exec(cmd);
+        InputStream in = process.getInputStream();
 
-				InputStream in = process.getInputStream();
+        BufferedReader reader = new BufferedReader(
+            new InputStreamReader(in, "UTF-8"));
 
-				BufferedReader reader = new BufferedReader(
-						new InputStreamReader(in, "UTF-8"));
+        String line = reader.readLine();
 
-				String line = reader.readLine();
+        while (line != null) {
 
-				while (line != null) {
+          System.out.println(line);
 
-					System.out.println(line);
+          line = reader.readLine();
+        }
 
-					line = reader.readLine();
-				}
+      } catch (IOException e1) {
+        e1.printStackTrace();
+      }
 
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
+      try {
+        Thread.sleep(2000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
 
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	// #!/bin/bash
-	//
-	// while((1<2))
-	// do
-	// curl -I http://...
-	// sleep 2
-	// done
+  // #!/bin/bash
+  //
+  // while((1<2))
+  // do
+  // curl -I http://...
+  // sleep 2
+  // done
 }
