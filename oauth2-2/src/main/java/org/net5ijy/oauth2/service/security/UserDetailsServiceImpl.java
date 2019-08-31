@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Resource;
-import org.net5ijy.oauth2.bean.Role;
-import org.net5ijy.oauth2.bean.User;
+import org.net5ijy.oauth2.entity.Role;
+import org.net5ijy.oauth2.entity.User;
 import org.net5ijy.oauth2.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -4,11 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
+import java.util.List;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.net5ijy.oauth2.bean.User;
+import org.net5ijy.oauth2.entity.User;
+import org.net5ijy.oauth2.response.Response;
+import org.net5ijy.oauth2.response.ResponseEnum;
 import org.net5ijy.oauth2.service.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,13 +32,14 @@ public class UserController {
 
   @RequestMapping(value = "/list")
   @ResponseBody
-  public List<User> list() {
+  public Response list() {
     List<User> users = userService.getUsers();
     log.info(users.toString());
     log.info(users.toString());
     log.info(users.toString());
     log.info(users.toString());
-    return users;
+
+    return new Response(ResponseEnum.SUCCESS).setResponseBody(users);
   }
 
   public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package org.net5ijy.oauth2.configuration;
 
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,53 +14,59 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Security配置
+ *
+ * @author xuguofeng
+ * @date 2019/8/28 11:57
+ */
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+  @Resource
+  private UserDetailsService userDetailsService;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+  @Resource
+  private PasswordEncoder passwordEncoder;
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(); // 使用 BCrypt 加密
-	}
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-	public AuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setUserDetailsService(userDetailsService);
-		authenticationProvider.setPasswordEncoder(passwordEncoder);
-		authenticationProvider.setHideUserNotFoundExceptions(false);
-		return authenticationProvider;
-	}
+  private AuthenticationProvider authenticationProvider() {
+    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+    authenticationProvider.setUserDetailsService(userDetailsService);
+    authenticationProvider.setPasswordEncoder(passwordEncoder);
+    authenticationProvider.setHideUserNotFoundExceptions(false);
+    return authenticationProvider;
+  }
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/fonts/**",
-				"/icon/**", "/favicon.ico");
-	}
+  @Override
+  public void configure(WebSecurity web) {
+    web.ignoring().antMatchers("/css/**", "/js/**", "/fonts/**",
+        "/icon/**", "/favicon.ico");
+  }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
 
-		http.requestMatchers()
-				.antMatchers("/login", "/login-error", "/oauth/authorize",
-						"/oauth/token").and().authorizeRequests()
-				.antMatchers("/login").permitAll().anyRequest().authenticated();
+    http.requestMatchers()
+        .antMatchers("/login", "/login-error", "/oauth/authorize",
+            "/oauth/token").and().authorizeRequests()
+        .antMatchers("/login").permitAll().anyRequest().authenticated();
 
-		// 登录页面
-		http.formLogin().loginPage("/login").failureUrl("/login-error");
+    // 登录页面
+    http.formLogin().loginPage("/login").failureUrl("/login-error");
 
-		// 禁用CSRF
-		http.csrf().disable();
-	}
+    // 禁用CSRF
+    http.csrf().disable();
+  }
 
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth)
-			throws Exception {
-		auth.userDetailsService(userDetailsService);
-		auth.authenticationProvider(authenticationProvider());
-	}
+  @Autowired
+  public void configureGlobal(AuthenticationManagerBuilder auth)
+      throws Exception {
+    auth.userDetailsService(userDetailsService);
+    auth.authenticationProvider(authenticationProvider());
+  }
 }

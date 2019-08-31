@@ -1,7 +1,8 @@
 package org.net5ijy.oauth2.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.net5ijy.oauth2.util.ResponseMessage;
+import org.net5ijy.oauth2.response.Response;
+import org.net5ijy.oauth2.response.ResponseEnum;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -23,10 +24,10 @@ public class TestController {
   //  @PreAuthorize(value = "#oauth2.hasAnyScope('read')")
   @RequestMapping(value = "/demo")
   @ResponseBody
-  public ResponseMessage getDemo() {
+  public Response getDemo() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     log.info(auth.toString());
     log.info(((OAuth2Authentication) auth).getOAuth2Request().getScope().toString());
-    return ResponseMessage.success();
+    return new Response(ResponseEnum.SUCCESS);
   }
 }

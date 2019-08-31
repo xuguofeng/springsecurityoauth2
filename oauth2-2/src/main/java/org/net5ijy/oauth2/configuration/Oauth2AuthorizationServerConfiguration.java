@@ -3,6 +3,7 @@ package org.net5ijy.oauth2.configuration;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.net5ijy.oauth2.provider.code.RedisAuthorizationCodeServices;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,10 +12,8 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.approval.ApprovalStore;
-import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
+import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
-import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
@@ -80,9 +79,13 @@ public class Oauth2AuthorizationServerConfiguration extends
     endpoints.authenticationManager(authenticationManager);
 
     // 数据库管理授权码
-    endpoints.authorizationCodeServices(new JdbcAuthorizationCodeServices(dataSource));
+//    endpoints.authorizationCodeServices(new JdbcAuthorizationCodeServices(dataSource));
+    endpoints.authorizationCodeServices(new RedisAuthorizationCodeServices(redisConnectionFactory));
+
     // 数据库管理授权信息
-    ApprovalStore approvalStore = new JdbcApprovalStore(dataSource);
+//    ApprovalStore approvalStore = new JdbcApprovalStore(dataSource);
+    TokenApprovalStore approvalStore = new TokenApprovalStore();
+    approvalStore.setTokenStore(redisTokenStore);
     endpoints.approvalStore(approvalStore);
   }
 }

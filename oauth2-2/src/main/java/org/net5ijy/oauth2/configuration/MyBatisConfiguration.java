@@ -1,12 +1,9 @@
 package org.net5ijy.oauth2.configuration;
 
 import java.io.IOException;
-
 import javax.annotation.Resource;
 import javax.sql.DataSource;
-
 import org.mybatis.spring.SqlSessionFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,7 +30,7 @@ public class MyBatisConfiguration {
     sqlSessionFactoryBean.setDataSource(dataSource);
 
     // 设置别名包
-    sqlSessionFactoryBean.setTypeAliasesPackage("org.net5ijy.oauth2.bean");
+    sqlSessionFactoryBean.setTypeAliasesPackage("org.net5ijy.oauth2.entity");
 
     // 设置mapper映射文件所在的包
     PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = new PathMatchingResourcePatternResolver();

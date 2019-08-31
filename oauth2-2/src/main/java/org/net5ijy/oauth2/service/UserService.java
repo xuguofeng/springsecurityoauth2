@@ -1,8 +1,7 @@
 package org.net5ijy.oauth2.service;
 
 import java.util.List;
-
-import org.net5ijy.oauth2.bean.User;
+import org.net5ijy.oauth2.entity.User;
 
 /**
  * 用户业务层

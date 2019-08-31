@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.net5ijy.oauth2.bean.User;
+import org.net5ijy.oauth2.entity.User;
 import org.net5ijy.oauth2.repository.UserRepository;
 import org.net5ijy.oauth2.service.UserService;
 import org.springframework.jdbc.core.JdbcTemplate;
