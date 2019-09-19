@@ -12,6 +12,14 @@
 
   <name>oauth2-parent</name>
 
+  <modules>
+    <module>./net5ijy-oauth2-common</module>
+    <module>./basic-oauth2</module>
+    <module>./oauth2-2</module>
+    <module>./authorization-server</module>
+    <module>./resource-server</module>
+  </modules>
+
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>

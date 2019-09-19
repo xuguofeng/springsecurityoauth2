@@ -6,6 +6,7 @@ import org.net5ijy.oauth2.response.ResponseEnum;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,11 @@ public class TestController {
   public Response getDemo() {
     Authentication auth = SecurityContextHolder.getContext()
         .getAuthentication();
-    log.info(auth.toString());
+
+    log.info(auth.getClass().getName());
+    log.info(auth.getDetails().getClass().getName());
+    log.info(auth.getCredentials().getClass().getName());
+    log.info(auth.getPrincipal().getClass().getName());
     log.info(((OAuth2Authentication) auth).getOAuth2Request().getScope().toString());
     return new Response(ResponseEnum.SUCCESS);
   }
