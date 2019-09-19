@@ -3,6 +3,7 @@ package org.net5ijy.oauth2.configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 
 /**
@@ -24,6 +25,11 @@ public class Oauth2ResourceServerConfiguration extends
     tokenService.setCheckTokenEndpointUrl(URL);
     tokenService.setClientId("net5ijy");
     tokenService.setClientSecret("12345678");
+
+    DefaultAccessTokenConverter defaultAccessTokenConverter = new DefaultAccessTokenConverter();
+    defaultAccessTokenConverter.setUserTokenConverter(new CustomUserAuthenticationConverter());
+
+    tokenService.setAccessTokenConverter(defaultAccessTokenConverter);
 
     resources.tokenServices(tokenService);
   }

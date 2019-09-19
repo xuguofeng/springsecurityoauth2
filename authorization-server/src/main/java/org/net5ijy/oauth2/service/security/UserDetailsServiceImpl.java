@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import org.net5ijy.oauth2.details.CustomUserDetail;
 import org.net5ijy.oauth2.entity.Role;
 import org.net5ijy.oauth2.entity.User;
 import org.net5ijy.oauth2.service.UserService;
@@ -37,9 +38,24 @@ public class UserDetailsServiceImpl implements UserDetailsService {
           + username);
     }
 
-    return new org.springframework.security.core.userdetails.User(
-        user.getUsername(), user.getPassword(), true, true, true, true,
-        getGrantedAuthorities(user));
+    CustomUserDetail userDetail =
+        new CustomUserDetail(
+            user.getUsername(),
+            "",
+            true,
+            true,
+            true,
+            true,
+            getGrantedAuthorities(user)
+        );
+
+    Set<String> urls = new HashSet<>();
+    urls.add("/user/{id}");
+    urls.add("/user/users");
+
+    userDetail.setUrls(urls);
+
+    return userDetail;
   }
 
   private Collection<? extends GrantedAuthority> getGrantedAuthorities(
