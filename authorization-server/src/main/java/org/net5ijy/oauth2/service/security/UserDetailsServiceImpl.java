@@ -41,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     CustomUserDetail userDetail =
         new CustomUserDetail(
             user.getUsername(),
-            "",
+            user.getPassword(),
             true,
             true,
             true,

@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.User;
  */
 public class CustomUserDetail extends User {
 
-  private Set<String> urls;
+  private Set urls;
 
   public CustomUserDetail(String username, String password,
       Collection<? extends GrantedAuthority> authorities) {
@@ -28,11 +28,11 @@ public class CustomUserDetail extends User {
         authorities);
   }
 
-  public Set<String> getUrls() {
+  public Set getUrls() {
     return urls;
   }
 
-  public void setUrls(Set<String> urls) {
+  public void setUrls(Set urls) {
     this.urls = urls;
   }
 }

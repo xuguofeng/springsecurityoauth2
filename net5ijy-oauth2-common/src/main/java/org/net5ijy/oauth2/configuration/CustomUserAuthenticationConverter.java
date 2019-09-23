@@ -1,7 +1,9 @@
 package org.net5ijy.oauth2.configuration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +51,8 @@ public class CustomUserAuthenticationConverter extends DefaultUserAuthentication
 
     Object urls = map.get("urls");
 
-    if (urls instanceof Set) {
-      userDetail.setUrls(getUserUrls((Set) urls));
+    if (urls instanceof ArrayList) {
+      userDetail.setUrls(getUrls((List) urls));
     }
 
     Authentication auth =
@@ -61,11 +63,8 @@ public class CustomUserAuthenticationConverter extends DefaultUserAuthentication
     return auth;
   }
 
-  private Set<String> getUserUrls(Set urls) {
-    Set<String> u = new HashSet<>();
-    for (Object url : urls) {
-      u.add(url.toString());
-    }
-    return u;
+  @SuppressWarnings("unchecked")
+  private Set getUrls(List urls) {
+    return new HashSet(urls);
   }
 }
