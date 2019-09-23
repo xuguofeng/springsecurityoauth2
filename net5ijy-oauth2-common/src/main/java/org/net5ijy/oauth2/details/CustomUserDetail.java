@@ -1,7 +1,6 @@
 package org.net5ijy.oauth2.details;
 
 import java.util.Collection;
-import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -13,7 +12,7 @@ import org.springframework.security.core.userdetails.User;
  */
 public class CustomUserDetail extends User {
 
-  private Set urls;
+  private Collection<String> urls;
 
   public CustomUserDetail(String username, String password,
       Collection<? extends GrantedAuthority> authorities) {
@@ -28,11 +27,11 @@ public class CustomUserDetail extends User {
         authorities);
   }
 
-  public Set getUrls() {
+  public Collection<String> getUrls() {
     return urls;
   }
 
-  public void setUrls(Set urls) {
+  public void setUrls(Collection<String> urls) {
     this.urls = urls;
   }
 }

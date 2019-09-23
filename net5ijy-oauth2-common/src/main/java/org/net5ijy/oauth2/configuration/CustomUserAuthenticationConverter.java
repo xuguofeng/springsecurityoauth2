@@ -3,9 +3,7 @@ package org.net5ijy.oauth2.configuration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.net5ijy.oauth2.details.CustomUserDetail;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,7 +50,13 @@ public class CustomUserAuthenticationConverter extends DefaultUserAuthentication
     Object urls = map.get("urls");
 
     if (urls instanceof ArrayList) {
-      userDetail.setUrls(getUrls((List) urls));
+      userDetail.setUrls(new HashSet<String>() {
+        {
+          for (Object url : (ArrayList) urls) {
+            add(url.toString());
+          }
+        }
+      });
     }
 
     Authentication auth =
@@ -61,10 +65,5 @@ public class CustomUserAuthenticationConverter extends DefaultUserAuthentication
     log.info("CustomUserAuthenticationConverter.extractAuthentication, authentication: {}", auth);
 
     return auth;
-  }
-
-  @SuppressWarnings("unchecked")
-  private Set getUrls(List urls) {
-    return new HashSet(urls);
   }
 }

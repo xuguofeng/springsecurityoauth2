@@ -1,7 +1,9 @@
 package org.net5ijy.oauth2.service.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -49,7 +51,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             getGrantedAuthorities(user)
         );
 
-    Set<String> urls = new HashSet<>();
+    List<String> urls = new ArrayList<>();
     urls.add("/user/{id}");
     urls.add("/user/users");
 
