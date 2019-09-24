@@ -1,4 +1,14 @@
 ## 资源服务器
 
 ## 请求资源
-http://localhost:7003/order/demo?access_token=25e4534f-2121-4919-86a1-c9abf8fd4a19
+http://192.168.0.10:7003/order/demo?access_token=0a42a885-efbb-4d9d-8e8e-1b9bef11eadf
+
+## 参考资料
+https://www.cnblogs.com/zhangzhi19861216/p/8594674.html
+spring-boot RestTemplate 连接池
+
+https://www.cnblogs.com/coderjinjian/p/9644923.html
+spring boot使用RestTemplate+httpclient连接池发送http消息
+
+https://blog.csdn.net/qq_32302897/article/details/84550377
+spring boot集成restTemplate，http连接池
