@@ -26,7 +26,7 @@ http://localhost:7002/oauth/token
 
 ## 授权码模式 - 使用curl命令获取token
 curl --user net5ijy:12345678 -X POST \
--d "grant_type=authorization_code&scope=all&redirect_uri=http%3a%2f%2flocalhost%3a8080&code=xLb76o" \
+-d "grant_type=authorization_code&scope=all&redirect_uri=http%3a%2f%2flocalhost%3a8080&code=ExDXtP" \
 http://192.168.186.1:7002/oauth/token
 
 ## 授权码模式 - 使用curl命令刷新token

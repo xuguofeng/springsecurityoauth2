@@ -18,6 +18,12 @@
 
   <dependencies>
 
+    <dependency>
+      <groupId>org.net5ijy.commons</groupId>
+      <artifactId>net5ijy-commons</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
     <!-- Redis -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -32,6 +38,15 @@
       <version>1.16.18</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpcore</artifactId>
+    </dependency>
+
   </dependencies>
 
 </project>
