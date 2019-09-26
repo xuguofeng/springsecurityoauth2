@@ -2,6 +2,7 @@ package org.net5ijy.oauth2;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
@@ -12,7 +13,7 @@ import org.net5ijy.commons.web.response.HtmlResponseHolder;
 import org.net5ijy.commons.web.util.HttpClientUtil;
 
 /**
- * 测试访问http://192.168.0.10:7003/order/demo?access_token=
+ * 测试访问http://localhost:7003/order/demo?access_token=295ee60e-0aa5-4215-90ac-3676100ebb02
  *
  * @author xuguofeng
  * @date 2019/9/25 11:14
@@ -42,10 +43,12 @@ public class TestHttpClient {
   private static class HttpClientRunnable implements Runnable {
 
     private static String url = "http://localhost:7003/order/demo?access_token=";
-    private static String token = "6c9c9d96-c6ca-47b4-9129-a14deaa2016d";
+    private static String token = "295ee60e-0aa5-4215-90ac-3676100ebb02";
 
     @Override
     public void run() {
+
+      Random random = new Random();
 
       String name = Thread.currentThread().getName();
 
@@ -66,7 +69,7 @@ public class TestHttpClient {
         System.out.println(name + ": " + content);
 
         try {
-          Thread.sleep(1000);
+          Thread.sleep(random.nextInt(1000) + 500);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }

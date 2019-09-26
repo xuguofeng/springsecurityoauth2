@@ -12,3 +12,6 @@ spring boot使用RestTemplate+httpclient连接池发送http消息
 
 https://blog.csdn.net/qq_32302897/article/details/84550377
 spring boot集成restTemplate，http连接池
+
+https://www.cnblogs.com/duanxz/p/3510622.html
+RestTemplate实践（及遇到的问题）

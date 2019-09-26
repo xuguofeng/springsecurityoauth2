@@ -10,6 +10,7 @@ import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.DefaultConnectionKeepAliveStrategy;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.StandardHttpRequestRetryHandler;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -87,11 +88,11 @@ public class Oauth2ResourceServerConfiguration extends
         .build();
 
     PoolingHttpClientConnectionManager manager =
-        new PoolingHttpClientConnectionManager(600, TimeUnit.SECONDS);
+        new PoolingHttpClientConnectionManager(registry);
     // 设置整个连接池最大连接数，根据场景决定
     manager.setMaxTotal(1000);
     // 路由是对maxTotal的细分
-    manager.setDefaultMaxPerRoute(100);
+    manager.setDefaultMaxPerRoute(1);
 
     // 可用空闲连接过期时间，重用空闲连接时会先检查是否空闲时间超过这个时间
     // 如果超过，释放socket重新建立
@@ -109,7 +110,8 @@ public class Oauth2ResourceServerConfiguration extends
 
     return HttpClients.custom().setConnectionManager(manager)
         .setRetryHandler(new StandardHttpRequestRetryHandler())
-        .setKeepAliveStrategy((response, context) -> 5000)
+//        .setKeepAliveStrategy((response, context) -> 5000)
+        .setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy())
         .setDefaultRequestConfig(requestConfig)
         .build();
   }
