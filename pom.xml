@@ -18,6 +18,7 @@
     <module>./oauth2-2</module>
     <module>./authorization-server</module>
     <module>./resource-server</module>
+    <module>./oauth2-httpclient</module>
   </modules>
 
   <parent>

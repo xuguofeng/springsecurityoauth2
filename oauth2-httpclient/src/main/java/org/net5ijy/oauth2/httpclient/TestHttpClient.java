@@ -1,4 +1,4 @@
-package org.net5ijy.oauth2;
+package org.net5ijy.oauth2.httpclient;
 
 import java.util.HashMap;
 import java.util.Map;

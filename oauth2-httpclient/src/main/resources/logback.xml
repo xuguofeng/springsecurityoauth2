@@ -7,11 +7,11 @@
     </encoder>
     <!-- 输出WARN及以上级别的日志 -->
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>DEBUG</level>
+      <level>INFO</level>
     </filter>
   </appender>
   <!-- 日志输出级别 -->
-  <root level="DEBUG">
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>
