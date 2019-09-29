@@ -3,7 +3,13 @@ package org.net5ijy.oauth2.configuration;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.apache.catalina.connector.Connector;
+import org.apache.coyote.AbstractProtocol;
 import org.net5ijy.oauth2.provider.code.RedisAuthorizationCodeServices;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +21,6 @@ import org.springframework.security.oauth2.provider.approval.ApprovalStore;
 import org.springframework.security.oauth2.provider.approval.JdbcApprovalStore;
 import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
-import org.springframework.security.oauth2.provider.code.JdbcAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -51,6 +56,19 @@ public class Oauth2AuthorizationServerConfiguration extends
       throws Exception {
     // 数据库管理client
     clients.withClientDetails(new JdbcClientDetailsService(dataSource));
+  }
+
+  @Bean
+  public EmbeddedServletContainerFactory getEmbeddedServletContainerFactory() {
+    TomcatEmbeddedServletContainerFactory containerFactory = new TomcatEmbeddedServletContainerFactory();
+    containerFactory
+        .addConnectorCustomizers(new TomcatConnectorCustomizer() {
+          @Override
+          public void customize(Connector connector) {
+            ((AbstractProtocol) connector.getProtocolHandler()).setConnectionTimeout(60000);
+          }
+        });
+    return containerFactory;
   }
 
   @Override
