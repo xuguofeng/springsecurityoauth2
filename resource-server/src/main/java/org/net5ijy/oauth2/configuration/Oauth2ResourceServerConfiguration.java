@@ -1,7 +1,6 @@
 package org.net5ijy.oauth2.configuration;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -92,11 +91,11 @@ public class Oauth2ResourceServerConfiguration extends
     // 设置整个连接池最大连接数，根据场景决定
     manager.setMaxTotal(1000);
     // 路由是对maxTotal的细分
-    manager.setDefaultMaxPerRoute(1);
+    manager.setDefaultMaxPerRoute(100);
 
     // 可用空闲连接过期时间，重用空闲连接时会先检查是否空闲时间超过这个时间
     // 如果超过，释放socket重新建立
-//    manager.setValidateAfterInactivity(60000);
+    manager.setValidateAfterInactivity(10000);
 
     RequestConfig requestConfig = RequestConfig.custom()
         // 服务器返回数据(response)的时间，超出该时间抛出read timeout
@@ -110,7 +109,7 @@ public class Oauth2ResourceServerConfiguration extends
 
     return HttpClients.custom().setConnectionManager(manager)
         .setRetryHandler(new StandardHttpRequestRetryHandler())
-//        .setKeepAliveStrategy((response, context) -> 5000)
+//        .setKeepAliveStrategy((response, context) -> 600000)
         .setKeepAliveStrategy(new DefaultConnectionKeepAliveStrategy())
         .setDefaultRequestConfig(requestConfig)
         .build();

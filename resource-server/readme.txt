@@ -15,3 +15,6 @@ spring boot集成restTemplate，http连接池
 
 https://www.cnblogs.com/duanxz/p/3510622.html
 RestTemplate实践（及遇到的问题）
+
+https://www.cnblogs.com/xingxueliao/p/5911292.html
+Spring Security OAuth2 开发指南

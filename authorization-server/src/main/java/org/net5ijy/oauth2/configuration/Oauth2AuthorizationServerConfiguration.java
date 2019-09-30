@@ -65,7 +65,7 @@ public class Oauth2AuthorizationServerConfiguration extends
         .addConnectorCustomizers(new TomcatConnectorCustomizer() {
           @Override
           public void customize(Connector connector) {
-            ((AbstractProtocol) connector.getProtocolHandler()).setConnectionTimeout(60000);
+            ((AbstractProtocol) connector.getProtocolHandler()).setConnectionTimeout(600000);
           }
         });
     return containerFactory;

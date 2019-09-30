@@ -13,7 +13,7 @@ import org.net5ijy.commons.web.response.HtmlResponseHolder;
 import org.net5ijy.commons.web.util.HttpClientUtil;
 
 /**
- * 测试访问http://localhost:7003/order/demo?access_token=295ee60e-0aa5-4215-90ac-3676100ebb02
+ * 测试访问http://localhost:7003/order/demo?access_token=d928ced5-3ca8-49af-800d-f8c6936841a9
  *
  * @author xuguofeng
  * @date 2019/9/25 11:14
@@ -33,7 +33,7 @@ public class TestHttpClient {
             TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<>(16), threadFactory, new AbortPolicy());
 
-    int times = 1;
+    int times = 4;
 
     for (int i = 0; i < times; i++) {
       executorService.execute(new HttpClientRunnable());
@@ -43,7 +43,7 @@ public class TestHttpClient {
   private static class HttpClientRunnable implements Runnable {
 
     private static String url = "http://localhost:7003/order/demo?access_token=";
-    private static String token = "295ee60e-0aa5-4215-90ac-3676100ebb02";
+    private static String token = "d928ced5-3ca8-49af-800d-f8c6936841a9";
 
     @Override
     public void run() {
