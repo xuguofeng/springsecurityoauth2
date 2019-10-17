@@ -3,3 +3,6 @@ Spring Security OAuth 2.0
 
 https://stackoverflow.com/questions/36076737/springboot-tomcatembeddedservletcontainer-keepalivetimeout-not-working
 Spring boot TomcatEmbeddedServletContainer KeepAliveTimeout not working
+
+https://juejin.im/post/5cb3e71a5188251b0e4e3887
+【长文剖析】Spring Cloud OAuth 生成Token 源码解析
