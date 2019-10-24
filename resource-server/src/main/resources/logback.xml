@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+  <!-- 控制台输出 -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger.%M\(%file:%line\) - [%r] - %msg%n</pattern>
+    </encoder>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+  </appender>
+  <!-- kafka输出 -->
+  <appender name="KafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+    <!--<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">-->
+      <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger.%M\(%file:%line\) - [%r] - %msg%n</pattern>-->
+    <!--</encoder>-->
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <includeCallerData>true</includeCallerData>
+    </encoder>
+    <topic>SpringOauthLog</topic>
+    <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy" />
+    <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
+    <producerConfig>bootstrap.servers=hadoop-01:9092</producerConfig>
+    <producerConfig>acks=1</producerConfig>
+    <producerConfig>linger.ms=1000</producerConfig>
+    <producerConfig>max.block.ms=0</producerConfig>
+    <appender-ref ref="STDOUT" />
+  </appender>
+  <!-- 日志输出级别 -->
+  <root level="DEBUG">
+    <!--<appender-ref ref="STDOUT" />-->
+    <appender-ref ref="KafkaAppender" />
+  </root>
+</configuration>
